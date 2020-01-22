@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MTG Game Counter</title>
+    <style>
+      body {
+        font-family: fantasy;
+        background-color: lightgrey;
+      }
+      #container {
+        width: 80%;
+        padding: 20px;
+        border: solid gray 1px;
+        margin: 0 auto;
+        background-color: wheat;
+        margin: 10vh auto;
+      }
+      #red-player {
+        color: red;
+      }
+      #blue-player {
+        color: blue;
+      }
+      #controls-container {
+        display: flex;
+      }
+      .player {
+        flex-grow: 1;
+      }
+      button {
+        font-size: 20px;
+        border-radius: 3px;
+        width: 40px;
+        color: white;
+        font-family: monospace;
+        font-weight: bold;
+      }
+      .minus {
+        background-color: seagreen;
+      }
+      .plus {
+        background-color: brown;
+      }
+      button#start_game {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        border: solid salmon 1px;
+        background-color: sandybrown;
+        color: rgb(61, 56, 56);
+      }
+      #red-wins-text,
+      #blue-wins-text {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Magic The Gather Game Counter</h1>
+      <div id="controls-container">
+        <div class="player" id="red-player">
+          <h2 id="red-player-point">0</h2>
+          <button class="plus" onclick="updateScore('red',1)">+</button>
+          <button class="minus" onclick="updateScore('red',-1)">-</button>
+          <h2 id="red-wins-text">Red Wins</h2>
+        </div>
+        <div class="player" id="blue-player">
+          <h2 id="blue-player-point">0</h2>
+          <button class="plus" onclick="updateScore('blue',1)">+</button>
+          <button class="minus" onclick="updateScore('blue',-1)">-</button>
+          <h2 id="blue-wins-text">Blue Wins</h2>
+        </div>
+      </div>
+      <button onclick="startGame()" id="start_game">Start Game</button>
+    </div>
+
+    <script>
+      let redPlayerPoints = 0;
+      let bluePlayerPoints = 0;
+
+      function startGame() {
+        redPlayerPoints = 20;
+        bluePlayerPoints = 20;
+        updateUI();
+      }
+
+      function updateScore(player, score) {
+        if (bluePlayerPoints <= 0 || redPlayerPoints <= 0) {
+          return;
+        }
+
+        if (player == 'red') {
+          redPlayerPoints += score;
+          updateUI();
+          return;
+        }
+
+        bluePlayerPoints += score;
+        updateUI();
+
+        return;
+      }
+
+      function updateUI() {
+        document.getElementById('blue-wins-text').style.display = 'none';
+        document.getElementById('red-wins-text').style.display = 'none';
+        document.getElementById('red-player-point').innerHTML = redPlayerPoints;
+        document.getElementById(
+          'blue-player-point'
+        ).innerHTML = bluePlayerPoints;
+
+        if (redPlayerPoints <= 0) {
+          document.getElementById('blue-wins-text').style.display = 'block';
+        }
+
+        if (bluePlayerPoints <= 0) {
+          document.getElementById('red-wins-text').style.display = 'block';
+        }
+      }
+    </script>
+  </body>
+</html>
